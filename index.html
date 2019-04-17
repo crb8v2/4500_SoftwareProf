@@ -42,8 +42,8 @@
             function(a, b) { if (arrofloops.get(a) == undefined){ document.getElementById("result").value = "ERROR: Undeclared variable " + a; throw new Error('Not Found'); } else {if ( ACC == 0){ return arrofloops.get(a);} else{ return null; } } }, //BRZERO
             function(a, b) { stack.push(0); }, //PUSH
             function(a, b) { stack.pop(); }, //POP
-            function(a, b) { stack[(stack.length-1)-a] = ACC; }, //STACKW
-            function(a, b) { ACC = stack[(stack.length-1)-a]; } //STACKR
+            function(a, b) { if((stack.length - 1) - a > stack.length -1  || stack.length -1 - a < 0){document.getElementById("result").value = "Error: Stack"; throw new Error('Stack Error');} stack[(stack.length-1)-a] = ACC; }, //STACKW
+            function(a, b) { if((stack.length - 1) - a > stack.length -1  || stack.length -1 - a < 0){document.getElementById("result").value = "Error: Stack"; throw new Error('Stack Error');} ACC = stack[(stack.length-1)-a]; } //STACKR
             ];
 
 
