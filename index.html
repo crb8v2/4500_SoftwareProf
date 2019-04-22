@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="jquery-git.js"></script>
+
+
+  <style id="compiled-css" type="text/css">
+      
+      body {
+        background: #fff;
+      }
+    .original {
+   position:absolute;
+    width: 50%;
+    margin: 0 auto;
+    padding: 1em;
+    background: #fff;
+    color: #000;
+    height:100px;
+    margin:2px;
+    border:1px solid black;
+    color:#fff;
+    overflow:auto;
+}
+
+#dummy{
+  color:black;
+}
+#board{
+  z-index:11;
+  background:transparent;
+   color:transparent;
+    caret-color: black;
+}
+.original span.highlighted {
+    color:red;
+}
+  </style>
+
+
+  <!-- TODO: Missing CoffeeScript 2 -->
+
+  <script type="text/javascript">
+
+
+    $(window).on('load', function() {
+      
+var highLightedWord = ["select","insert","update","from","where"];
+var regexFromMyArray = new RegExp(highLightedWord.join("|"), 'ig');
+$('#board').keyup(function(event){
+ document.getElementById('dummy').innerHTML = $('#board').html().replace(regexFromMyArray,function(str){
+ return '<span class="highlighted">'+str+'</span>'
+ })
+})
+var target = $("#dummy");
+  $("#board").scroll(function() {
+    target.prop("scrollTop", this.scrollTop)
+          .prop("scrollLeft", this.scrollLeft);
+  });
+
+
+    });
+
+</script>
+    
+  
+    
+    
+
+</head>
+<body>
+    <div id="board" class="original" contenteditable="true">
+   
+</div>
+<div id="dummy" class="original">
+   
+</div>
+
+</body>
+</html>
+
