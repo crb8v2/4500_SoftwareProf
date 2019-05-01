@@ -31,7 +31,7 @@
             function(a, b) { if (arrofvars.get(a) == undefined) { document.getElementById("result").value = "ERROR: Undeclared variable " + a; throw new Error('Not Found'); } else {arrofvars.set(a, ACC);} }, //STORE
             function(a, b) { if (arrofvars.get(a) == undefined) { document.getElementById("result").value = "ERROR: Undeclared variable " + a; throw new Error('Not Found'); } else {arrofvars.set(a, arrofvars.get(b));} }, //COPY
             function(a, b) { if (arrofvars.get(a) == undefined) { document.getElementById("result").value = "ERROR: Undeclared variable " + a; throw new Error('Not Found'); } else {let numprompt = prompt("Give a value"); arrofvars.set(a, numprompt);} }, //READ
-            function(a, b) { if (arrofvars.get(a) == undefined) { document.getElementById("result").value = "ERROR: Undeclared variable " + a; throw new Error('Not Found'); } else {document.getElementById("result").value = "Number is: " + arrofvars.get(a);} }, //WRITE
+            function(a, b) { if (arrofvars.get(a) == undefined) { document.getElementById("result").value = "ERROR: Undeclared variable " + a; throw new Error('Not Found'); } else {document.getElementById("result").value += "Number is: " + arrofvars.get(a) + "\n";} }, //WRITE
             function(a, b) { return; }, //STOP hmmmmmmm...... this should be fine because my parser made sure this is at the end; prob need to account for this though
             function(a, b) { return; }, //NOOP
             function(a, b) { if (arrofloops.get(a) == undefined){ document.getElementById("result").value = "ERROR: Undeclared variable " + a; throw new Error('Not Found'); } else {return arrofloops.get(a);} }, //BR
