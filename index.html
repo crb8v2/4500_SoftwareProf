@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <link rel="stylesheet" type="text/css" href="style.css">
 <div class="w3-padding-large" id="main">
   <!-- Header/Home -->
@@ -32,7 +31,7 @@
             function(a, b) { if (arrofvars.get(a) == undefined) { document.getElementById("result").value = "ERROR: Undeclared variable " + a; throw new Error('Not Found'); } else {arrofvars.set(a, ACC);} }, //STORE
             function(a, b) { if (arrofvars.get(a) == undefined) { document.getElementById("result").value = "ERROR: Undeclared variable " + a; throw new Error('Not Found'); } else {arrofvars.set(a, arrofvars.get(b));} }, //COPY
             function(a, b) { if (arrofvars.get(a) == undefined) { document.getElementById("result").value = "ERROR: Undeclared variable " + a; throw new Error('Not Found'); } else {let numprompt = prompt("Give a value"); arrofvars.set(a, numprompt);} }, //READ
-            function(a, b) { if (arrofvars.get(a) == undefined) { document.getElementById("result").value = "ERROR: Undeclared variable " + a; throw new Error('Not Found'); } else {document.getElementById("result").value += "Number is: " + arrofvars.get(a) + "\n";} }, //WRITE
+            function(a, b) { if (arrofvars.get(a) == undefined) { document.getElementById("result").value = "ERROR: Undeclared variable " + a; throw new Error('Not Found'); } else {document.getElementById("result").value = "Number is: " + arrofvars.get(a);} }, //WRITE
             function(a, b) { return; }, //STOP hmmmmmmm...... this should be fine because my parser made sure this is at the end; prob need to account for this though
             function(a, b) { return; }, //NOOP
             function(a, b) { if (arrofloops.get(a) == undefined){ document.getElementById("result").value = "ERROR: Undeclared variable " + a; throw new Error('Not Found'); } else {return arrofloops.get(a);} }, //BR
@@ -52,15 +51,13 @@
 
           function scanforit(){
             let arroftoks = [];
-              var num = 0;
             class Token{
-                constructor(tokerid, teval, teline){
-                  this.tokid = tokerid; //id of token: rsvd_tk, var_tk, num_tk
-                  this.usd = teval; //user defined value
-                  this.linenum = teline; //linenumber
-                  this.numArgs = null; //number of args, for reserved tks only
-                  
-                }
+            constructor(tokerid, teval, teline){
+              this.tokid = tokerid; //id of token: rsvd_tk, var_tk, num_tk
+              this.usd = teval; //user defined value
+              this.linenum = teline; //linenumber
+              this.numArgs = null; //number of args, for reserved tks only
+            }
             }
             var linesof = document.getElementById('codespace').value.split('\n');
             var re = new RegExp("^[a-zA-Z][a-zA-Z0-9]*$");
@@ -69,17 +66,16 @@
               var tk = linesof[linenumber].split(" ");
               for(var p = 0; p < tk.length; p++){
                 if(reservedarr.includes(tk[p]) == true){
-                  arroftoks.push(new Token("rsvd_tk", tk[p], num));
-                    num++;
+                  arroftoks.push(new Token("rsvd_tk", tk[p], linenumber));
                 }
                 else if(re.test(tk[p])){
-                  arroftoks.push(new Token("var_tk", tk[p], num));
+                  arroftoks.push(new Token("var_tk", tk[p], linenumber));
                 }
                 else if(!isNaN(tk[p])){ //its a number
-                  arroftoks.push(new Token("num_tk", tk[p], num));
+                  arroftoks.push(new Token("num_tk", tk[p], linenumber));
                 }
                 else if(re2.test(tk[p])){  //i almost def have to keep them seperate, dont think they can go in arroftoks
-                  arroftoks.push(new Token("label_tk", tk[p], num));
+                  arroftoks.push(new Token("label_tk", tk[p], linenumber));
                 }
                 else{
                   document.getElementById("result").value = "Error Unknown Token on " + linenumber;
@@ -109,10 +105,10 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Variable expected after READ on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Variable expected after READ";
                   throw new Error('Syntax Error');
                 }
-              } 
+              }
               if(arroftoks[p].usd == "WRITE"){
                 arroftoks[p].numArgs = 1;
                 p++;
@@ -121,7 +117,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Variable expected after WRITE on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Variable expected after WRITE";
                   throw new Error('Syntax Error');
                 }
               }
@@ -133,7 +129,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Variable expected after STORE on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Variable expected after STORE";
                   throw new Error('Syntax Error');
                 }
               }
@@ -149,7 +145,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Variable or number expected after LOAD on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Variable or number expected after LOAD";
                   throw new Error('Syntax Error');
                 }
               }
@@ -170,7 +166,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Variable or number expected after ADD on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Variable or number expected after ADD";
                   throw new Error('Syntax Error');
                 }
               }
@@ -190,7 +186,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Label name expected after use of BRNEG on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Label name expected after use of BRNEG";
                   throw new Error('Syntax Error');
                 }
               }
@@ -202,7 +198,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Label name expected after use of BRZNEG on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Label name expected after use of BRZNEG";
                   throw new Error('Syntax Error');
                 }
               }
@@ -214,7 +210,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Label name expected after use of BRPOS on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Label name expected after use of BRPOS";
                   throw new Error('Syntax Error');
                 }
               }
@@ -226,7 +222,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Label name expected after use of BRZPOS on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Label name expected after use of BRZPOS";
                   throw new Error('Syntax Error');
                 }
               }
@@ -238,7 +234,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Label name expected after use of BRZERO on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Label name expected after use of BRZERO";
                   throw new Error('Syntax Error');
                 }
               }
@@ -252,12 +248,12 @@
                     continue;
                   }
                   else{
-                    document.getElementById("result").value = "Error: 2 Variables expected after COPY on line " + arroftoks[p].linenum;
+                    document.getElementById("result").value = "Error: 2 Variables expected after COPY";
                     throw new Error('Syntax Error');
                   }
                 }
                 else{
-                  document.getElementById("result").value = "Error: Variable expected after COPY on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Variable expected after COPY";
                   throw new Error('Syntax Error');
                 }
               }
@@ -273,7 +269,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Variable or number expected after DIV on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Variable or number expected after DIV";
                   throw new Error('Syntax Error');
                 }
               }
@@ -289,7 +285,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Variable or Number expected after MULT on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Variable or Number expected after MULT";
                   throw new Error('Syntax Error');
                 }
               }
@@ -305,7 +301,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Variable or Number expected after SUB on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Variable or Number expected after SUB";
                   throw new Error('Syntax Error');
                 }
               }
@@ -327,7 +323,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Number expected after STACKW on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Number expected after STACKW";
                   throw new Error('Syntax Error');
                   p++;
                   continue;
@@ -341,7 +337,7 @@
                   continue;
                 }
                 else{
-                  document.getElementById("result").value = "Error: Number expected after STACKR on line " + arroftoks[p].linenum;
+                  document.getElementById("result").value = "Error: Number expected after STACKR";
                   throw new Error('Syntax Error');
                   p++;
                   continue;
@@ -358,18 +354,18 @@
                       continue;
                     }
                     else{
-                      document.getElementById("result").value = "ERROR: Number expected on line " + arroftoks[p].linenum;
+                      document.getElementById("result").value = "ERROR: Number expected";
                       throw new Error('Syntax Error');
                     }
                   }
                   else{
-                    document.getElementById("result").value = "ERROR: Variable expected on line " + arroftoks[p].linenum;
+                    document.getElementById("result").value = "ERROR: Variable expected";
                     throw new Error('Syntax Error');
                   } 
                 }
               }
               else{
-                document.getElementById("result").value = "ERROR: Uknown argument on line " + arroftoks[p].linenum;
+                document.getElementById("result").value = "ERROR: Uknown argument";
               }
             }
             return arrofvars;
@@ -427,96 +423,5 @@
 
 </body>
 
-=======
-<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title></title>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="googlebot" content="noindex, nofollow">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-  <script
-    type="text/javascript"
-    src="jquery-git.js"></script>
-
-
-  <style id="compiled-css" type="text/css">
-      
-      body {
-        background: #fff;
-      }
-    .original {
-   position:absolute;
-    width: 50%;
-    margin: 0 auto;
-    padding: 1em;
-    background: #fff;
-    color: #000;
-    height:100px;
-    margin:2px;
-    border:1px solid black;
-    color:#fff;
-    overflow:auto;
-}
-
-#dummy{
-  color:black;
-}
-#board{
-  z-index:11;
-  background:transparent;
-   color:transparent;
-    caret-color: black;
-}
-.original span.highlighted {
-    color:red;
-}
-  </style>
-
-
-  <!-- TODO: Missing CoffeeScript 2 -->
-
-  <script type="text/javascript">
-
-
-    $(window).on('load', function() {
-      
-var highLightedWord = ["select","insert","update","from","where"];
-var regexFromMyArray = new RegExp(highLightedWord.join("|"), 'ig');
-$('#board').keyup(function(event){
- document.getElementById('dummy').innerHTML = $('#board').html().replace(regexFromMyArray,function(str){
- return '<span class="highlighted">'+str+'</span>'
- })
-})
-var target = $("#dummy");
-  $("#board").scroll(function() {
-    target.prop("scrollTop", this.scrollTop)
-          .prop("scrollLeft", this.scrollLeft);
-  });
-
-
-    });
-
-</script>
-    
-  
-    
-    
-
-</head>
-<body>
-    <div id="board" class="original" contenteditable="true">
-   
-</div>
-<div id="dummy" class="original">
-   
-</div>
-
-</body>
->>>>>>> da413f1d398181db5a68627472765bb1472980c0
 </html>
 
