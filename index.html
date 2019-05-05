@@ -16,6 +16,7 @@
         
        // document.getElementById('accumulator').value += "AFTER SUBSTITUTION, ACC: "+ ACC + "," "\n"; 
             function disname() {
+                document.getElementById("accumulator").value= "";
           document.getElementById("result").value = "";
           var ACC = 0;
           var arroftoks = [];
@@ -32,150 +33,134 @@
                 var linesFunction = 1;
                 
           var arroffuncts = [
-            function(a, b) { 
+            function(a, b, c, d) { 
                 if(!isNaN(a)){ 
                     document.getElementById('accumulator').value +=  "\nLine " + linesFunction + ", ACC: "+ ACC + "\n";  
                     document.getElementById('accumulator').value += "Line " + linesFunction + ", ADD: " + ACC + " + " + a + "\n"; 
-                    ACC = parseInt(ACC) + parseInt(a);  document.getElementById('accumulator').value +=  "Line " + linesFunction + ", AFTER ADDITION, ACC: "+ ACC + "\n"; 
-                    linesFunction++; 
+                    ACC = parseInt(ACC) + parseInt(a);  document.getElementById('accumulator').value +=  "Line " + c + ", AFTER ADDITION, ACC: "+ ACC + "\n"; 
                 } else{ 
                     ACC = parseInt(ACC) + parseInt(arrofvars.get(a));
-                    linesFunction++;
                 } 
             }, //ADD
               
-            function(a, b) { 
+            function(a, b, c, d) { 
                 if(!isNaN(a)){ 
-                    document.getElementById('accumulator').value += "\nLine " + linesFunction + ", ACC: "+ ACC + "\n"; 
+                    document.getElementById('accumulator').value += "\nLine " + c + ", ACC: "+ ACC + "\n"; 
                     document.getElementById('accumulator').value += "SUBSTITUTE " + ACC + " - " + a + "\n"; 
                     ACC = parseInt(ACC) - parseInt(a); 
-                    document.getElementById('accumulator').value += "Line " + linesFunction + ", AFTER SUBSTITUTION, ACC: "+ ACC + "\n"; linesFunction++; 
+                    document.getElementById('accumulator').value += "Line " + c + ", AFTER SUBSTITUTION, ACC: "+ ACC + "\n"; linesFunction++; 
                 } else{ 
                     ACC = parseInt(ACC) - parseInt(arrofvars.get(a));
                 } 
             }, //SUB
               
-            function(a, b) { 
+            function(a, b, c, d){ 
                 if(!isNaN(a)){ 
-                              document.getElementById('accumulator').value += "\nLine " + linesFunction + ", ACC: "+ ACC + "\n"; 
-                              document.getElementById('accumulator').value += "Line " + linesFunction + ", MULT: " + ACC + " * " + a + "\n"; 
+                              document.getElementById('accumulator').value += "\nLine " + c + ", ACC: "+ ACC + "\n"; 
+                              document.getElementById('accumulator').value += "Line " + c + ", MULT: " + ACC + " * " + a + "\n"; 
                               ACC = parseInt(ACC) * parseInt(a); 
-                              document.getElementById('accumulator').value += "Line " + linesFunction + ", AFTER MULTIPLICATION, ACC: "+ ACC + "\n"; 
-                              linesFunction++;
+                              document.getElementById('accumulator').value += "Line " + c + ", AFTER MULTIPLICATION, ACC: "+ ACC + "\n"; 
                              } else{ 
                                  ACC = parseInt(ACC) * parseInt(arrofvars.get(a));
                              } 
                 }, //MULT
               
-            function(a, b) { 
+            function(a, b, c, d) { 
                 if(!isNaN(a)){ 
-                             document.getElementById('accumulator').value += "\nLine " + linesFunction + ", ACC: "+ ACC + "\n"; 
-                              document.getElementById('accumulator').value += "Line " + linesFunction + ", DIV: " + ACC + " / " + a + "\n"; 
+                             document.getElementById('accumulator').value += "\nLine " + c + ", ACC: "+ ACC + "\n"; 
+                              document.getElementById('accumulator').value += "Line " + c + ", DIV: " + ACC + " / " + a + "\n"; 
                               ACC = parseInt(ACC) / parseInt(a); 
-                              document.getElementById('accumulator').value += "Line " + linesFunction + ", AFTER DIVISION, ACC: "+ ACC + "\n"; linesFunction++; 
+                              document.getElementById('accumulator').value += "Line " + c + ", AFTER DIVISION, ACC: "+ ACC + "\n"; linesFunction++; 
                              } else{ 
                                  ACC = parseInt(ACC) / parseInt(arrofvars.get(a)); 
                              } 
                 }, //DIV
               
-            function(a, b) { 
+            function(a, b, c, d) { 
                 if (!isNaN(a)){ 
-                    linesFunction++;
                     ACC = a; return; 
                 } else if (arrofvars.get(a) == undefined) { 
-                    document.getElementById("result").value += "\nLine " + linesFunction + ", ERROR: Undeclared variable " + a + "\n"; throw new Error('Not Found'); 
-                    linesFunction++;
+                    document.getElementById("result").value += "\nLine " + c + ", ERROR: Undeclared variable " + a + "\n"; throw new Error('Not Found'); 
                 } else {
                     ACC = arrofvars.get(a);
-                    document.getElementById("accumulator").value += "\nLine " + linesFunction + ", LOADING " + arrofvars.get(a) + " from Accumulator \n";
-                    document.getElementById('accumulator').value += "Line " + linesFunction + ", ACC: "+ ACC + "\n";
-                    linesFunction++;
+                    document.getElementById("accumulator").value += "\nLine " + c + ", LOADING " + arrofvars.get(a) + " from Accumulator \n";
+                    document.getElementById('accumulator').value += "Line " + c + ", ACC: "+ ACC + "\n";
             
             } }, //LOAD
               
               
-            function(a, b) { 
+           function(a, b, c, d){ 
                 if (arrofvars.get(a) == undefined) { 
-                    document.getElementById("result").value += "Line " + linesFunction + ", ERROR: Undeclared variable " + a + "\n"; throw new Error('Not Found');
-                    linesFunction++;
+                    document.getElementById("result").value += "Line " + c + ", ERROR: Undeclared variable " + a + "\n"; throw new Error('Not Found');
                 } else {
                     arrofvars.set(a, ACC);
-                    document.getElementById("accumulator").value += "\nLine " + linesFunction + ", STORING " + arrofvars.get(a) + " to Accumulator \n"; linesFunction++;
+                    document.getElementById("accumulator").value += "\nLine " + c + ", STORING " + arrofvars.get(a) + " to Accumulator \n"; linesFunction++;
                 } 
             }, //STORE
               
               
-            function(a, b) { 
+           function(a, b, c, d) { 
                 if (arrofvars.get(a) == undefined) { 
-                    document.getElementById("result").value += "Line " + linesFunction + ", ERROR: Undeclared variable " + a + "\n"; throw new Error('Not Found'); 
-                    linesFunction++;
+                    document.getElementById("result").value += "Line " + c + ", ERROR: Undeclared variable " + a + "\n"; throw new Error('Not Found'); 
                 } else {
                     arrofvars.set(a, arrofvars.get(b)); 
-                    linesFunction++;
                 } 
             }, //COPY
               
-            function(a, b) { 
+           function(a, b, c, d) { 
                 if (arrofvars.get(a) == undefined) { 
-                    document.getElementById("accumulator").value += "\nLine " + linesFunction + ", ERROR: Undeclared variable " + a + "\n"; 
+                    document.getElementById("accumulator").value += "\nLine " + c + ", ERROR: Undeclared variable " + a + "\n"; 
                     throw new Error('Not Found');
-                    linesFunction++;
                 } else {
                     let numprompt = prompt("Give a value"); arrofvars.set(a, numprompt);
-                    document.getElementById('accumulator').value += "\nLine " + linesFunction + ", User Input " + numprompt + "\n"; linesFunction++;
+                    document.getElementById('accumulator').value += "\nLine " + c + ", User Input " + numprompt + "\n"; linesFunction++;
                 } 
             }, //READ
               
-            function(a, b) { 
+            function(a, b, c, d) { 
                 if (arrofvars.get(a) == undefined) { 
-                    document.getElementById("result").value += "Line " + linesFunction + ", ERROR: Undeclared variable " + a + "\n"; 
+                    document.getElementById("result").value += "Line " + c + ", ERROR: Undeclared variable " + a + "\n"; 
                     throw new Error('Not Found'); 
-                    linesFunction++;
                 } else if(arrofvars.get(a) >= 'a' && arrofvars.get(a) <= 'x'|| arrofvars.get(a) >= 'A' && arrofvars.get(a) <= 'Z'){
                     document.getElementById("result").value = "ERROR: " + a + " Input Value " + arrofvars.get(a) + " is not allowed, Only input numbers"; 
-                    linesFunction++;
                     throw new Error('Not Found');  
                 }else {
                     document.getElementById("result").value += "Number is: " + arrofvars.get(a) + "\n" ;
-                    document.getElementById("accumulator").value += "\nLine " + linesFunction + ", Writing Output:  " + arrofvars.get(a) + "\n";
+                    document.getElementById("accumulator").value += "\nLine " + c + ", Writing Output:  " + arrofvars.get(a) + "\n";
                 } 
             }, //WRITE
               
               
-            function(a, b) { 
-                linesFunction++;
+            function(a, b, c, d) { 
+                  document.getElementById("accumulator").value += "\nLine " + c + ", Program Terminated\n";
                 return; 
             }, //STOP hmmmmmmm...... this should be fine because my parser made sure this is at the end; prob need to account for this though
             
-            function(a, b) { 
-                linesFunction++;
+            function(a, b, c, d) { 
+                document.getElementById("accumulator").value += "\nLine " + c + ", DO NOTHING";
                 return; 
             }, //NOOP
               
-            function(a, b) { 
+            function(a, b, c, d) { 
                 if (arrofloops.get(a) == undefined){ 
-                    document.getElementById("result").value += "Line " + linesFunction + ", ERROR: Undeclared variable " + a + "\n"; 
+                    document.getElementById("result").value += "Line " + c + ", ERROR: Undeclared variable " + a + "\n"; 
                     throw new Error('Not Found'); 
-                    linesFunction++;
                 } else {                  
-                    document.getElementById("accumulator").value += "\nLine " + linesFunction + ", GO: " + a + "\n";
-                     linesFunction++;  
+                    document.getElementById("accumulator").value += "\nLine " + c + ", GO: " + a + "\n";
                     return arrofloops.get(a); 
                 } 
             }, //BR
               
-            function(a, b) { 
+            function(a, b, c, d) { 
                 if (arrofloops.get(a) == undefined){ 
-                    document.getElementById("result").value += "Line " + linesFunction + ", ERROR: Undeclared variable " + a + "\n"; 
+                    document.getElementById("result").value += "Line " + c + ", ERROR: Undeclared variable " + a + "\n"; 
                     throw new Error('Not Found'); 
-                    linesFunction++;
                 } else {
                     if ( ACC < 0){    
-                        document.getElementById("accumulator").value += "\nLine " + linesFunction + ", Comparing: " + ACC + " < 0, GO: " + a + "\n";
-                        linesFunction++;
+                        document.getElementById("accumulator").value += "\nLine " + c + ", Comparing: " + ACC + " < 0, GO: " + a + "\n";
                         return arrofloops.get(a);
                     }  else{ 
-                         document.getElementById("accumulator").value += "\nLine " + linesFunction + ", Comparing: " + ACC + " < 0\n";
+                         document.getElementById("accumulator").value += "\nLine " + c + ", Comparing: " + ACC + " < 0 GO: CONTINUE\n";
                         return null; 
                     } 
                 } 
@@ -183,53 +168,103 @@
               
               
             
-            function(a, b) { 
+            function(a, b, c, d){ 
                 if (arrofloops.get(a) == undefined){ 
-                    document.getElementById("result").value += "Line " + linesFunction + ", ERROR: Undeclared variable " + a + "\n"; 
+                    document.getElementById("result").value += "Line " + c + ", ERROR: Undeclared variable " + a + "\n"; 
                     throw new Error('Not Found'); linesFunction++;
                 } else {
                     if ( ACC <= 0){ 
-                        document.getElementById("accumulator").value += "\nLine " + linesFunction + ", Comparing: " + ACC + " <= 0, GO: " + a + "\n";
-                        linesFunction++;
+                        document.getElementById("accumulator").value += "\nLine " + c + ", Comparing: " + ACC + " <= 0, GO: " + a + "\n";
                         return arrofloops.get(a); 
                     } else{   
-                         document.getElementById("accumulator").value += "\nLine " + linesFunction + ", Comparing: " + ACC + " <= 0\n";
+                         document.getElementById("accumulator").value += "\nLine " + c + ", Comparing: " + ACC + " <= 0 GO: CONTINUE\n";
                         return null; 
                     } 
                 } 
             }, //BRZNEG
             
-            function(a, b) { 
+            function(a, b, c, d) { 
                 if (arrofloops.get(a) == undefined){ 
-                    document.getElementById("result").value += "Line " + linesFunction + ", ERROR: Undeclared variable " + a + "\n"; 
+                    document.getElementById("result").value += "Line " + c + ", ERROR: Undeclared variable " + a + "\n"; 
                     throw new Error('Not Found'); 
-                    linesFunction++;
-                } else {if ( ACC > 0){ 
-                    return arrofloops.get(a); 
-                    linesFunction++;
-                } else{ 
-                    return null;
-                } } }, //BRPOS
-            function(a, b) { if (arrofloops.get(a) == undefined){ document.getElementById("result").value += "Line " + linesFunction + ", ERROR: Undeclared variable " + a + "\n"; throw new Error('Not Found');linesFunction++; } else {if ( ACC >= 0){ return arrofloops.get(a); linesFunction++;} else{ return null; } } }, //BRZPOS
-            function(a, b) { if (arrofloops.get(a) == undefined){ document.getElementById("result").value += "Line " + linesFunction + ", ERROR: Undeclared variable " + a + "\n"; throw new Error('Not Found'); linesFunction++;} else {if ( ACC == 0){ return arrofloops.get(a); linesFunction++;} else{ return null; } } }, //BRZERO
-            function(a, b) { stack.push(0); linesFunction++;}, //PUSH
-            function(a, b) { stack.pop(); linesFunction++;}, //POP
-            function(a, b) { if((stack.length - 1) - a > stack.length -1  || stack.length -1 - a < 0){document.getElementById("result").value = "Error: Stack"; throw new Error('Stack Error');linesFunction++;} stack[(stack.length-1)-a] = ACC; linesFunction++;}, //STACKW
-            function(a, b) { if((stack.length - 1) - a > stack.length -1  || stack.length -1 - a < 0){document.getElementById("result").value = "Error: Stack"; throw new Error('Stack Error');linesFunction++;} ACC = stack[(stack.length-1)-a]; linesFunction++; } //STACKR
+                } else {
+                    if ( ACC > 0){ 
+                        document.getElementById("accumulator").value += "\nLine " + c + ", Comparing: " + ACC + " > 0, GO: " + a + "\n";   
+                        return arrofloops.get(a); 
+                    } else{ 
+                         document.getElementById("accumulator").value += "\nLine " + c + ", Comparing: " + ACC + " > 0 GO: CONTINUE\n";
+                        return null;
+                    } 
+                } 
+            }, //BRPOS
+              
+            function(a, b, c, d) { 
+                if (arrofloops.get(a) == undefined){ 
+                    document.getElementById("result").value += "Line " + c + ", ERROR: Undeclared variable " + a + "\n"; 
+                    throw new Error('Not Found');linesFunction++;
+                } else {
+                    if ( ACC >= 0){ 
+                         document.getElementById("accumulator").value += "\nLine " + c + ", Comparing: " + ACC + " >= 0, GO: " + a + "\n";
+                        return arrofloops.get(a); 
+
+                    } else{ 
+                        
+                         document.getElementById("accumulator").value += "\nLine " + c + ", Comparing: " + ACC + " >= 0, GO: CONTINUE\n";
+                        return null;
+                    } 
+                } 
+            }, //BRZPOS
+            
+              
+            function(a, b, c, d) { 
+                if (arrofloops.get(a) == undefined){ 
+                    document.getElementById("result").value += "Line " + c + ", ERROR: Undeclared variable " + a + "\n"; 
+                    throw new Error('Not Found'); linesFunction++;
+                } else {
+                    if ( ACC == 0){ 
+                        document.getElementById("accumulator").value += "\nLine " + c + ", Comparing: " + ACC + " = 0, GO: " + a + "\n";
+                        return arrofloops.get(a); 
+                        
+                    } else{ 
+                        document.getElementById("accumulator").value += "\nLine " + c + ", Comparing: " + ACC + " = 0 GO: CONTINUE\n";
+                        return null; 
+                    } 
+                } 
+            }, //BRZERO
+            
+            function(a, b, c, d) { 
+                document.getElementById("accumulator").value += "\nLine " + c + ", ADD to stack\n";
+                stack.push(0); 
+            }, //PUSH
+            
+            function(a, b, c, d) { 
+                document.getElementById("accumulator").value += "\nLine " + c + ", REMOVE from stack\n";
+                stack.pop(); 
+            }, //POP
+              
+            function(a, b, c, d) { 
+                if((stack.length - 1) - a > stack.length -1  || stack.length -1 - a < 0){
+                    document.getElementById("result").value = "Error: Stack"; 
+                    throw new Error('Stack Error');
+                } 
+                
+                 document.getElementById("accumulator").value += "\nLine " + c + ", WRITING to Stack\n";
+                stack[(stack.length-1)-a] = ACC; 
+            }, //STACKW
+              
+              
+            function(a, b, c, d) { 
+                if((stack.length - 1) - a > stack.length -1  || stack.length -1 - a < 0){
+                    document.getElementById("result").value = "Error: Stack"; 
+                    throw new Error('Stack Error');
+                } 
+                
+                 document.getElementById("accumulator").value += "\nLine " + c + ", READING to Stack\n";
+                ACC = stack[(stack.length-1)-a]; 
+            } //STACKR
             ];
 
                 
-            function allLetter(inputtxt) { 
-              var letters = /^[A-Za-z]+$/;
-              if(inputtxt.value.match(letters))
-                  {
-                  alert('Your name have accepted : you can try another');
-                  return true;
-                  } else {
-                    alert('Please input alphabet characters only');
-                  return false;
-                  }
-            }
            
           function scanforit(){
             let arroftoks = [];
@@ -265,7 +300,6 @@
                 }
                 else if(re2.test(tk[p])){  //i almost def have to keep them seperate, dont think they can go in arroftoks
                   arroftoks.push(new Token("label_tk", tk[p], lines));
-                   lines++;
                 }
                 else {
                     document.getElementById("result").value = "Error Unknown Token on line " +  lines;
@@ -576,12 +610,12 @@
               else{
                 let i = arroftoks[p].numArgs;
                 if (i == 0){
-                  arroffuncts[reservedarr.indexOf(arroftoks[p].usd)](0,0);
+                  arroffuncts[reservedarr.indexOf(arroftoks[p].usd)](0,0,arroftoks[p+1].linenum);
                   p++;
                 }
                 else if (i == 1){
                   if(arroftoks[p].usd == "BR" ||arroftoks[p].usd == "BRNEG" ||arroftoks[p].usd == "BRZNEG" ||arroftoks[p].usd == "BRPOS" ||arroftoks[p].usd == "BRZPOS" ||arroftoks[p].usd == "BRZERO"){
-                    let holdit = arroffuncts[reservedarr.indexOf(arroftoks[p].usd)](arroftoks[p+1].usd, 0);
+                    let holdit = arroffuncts[reservedarr.indexOf(arroftoks[p].usd)](arroftoks[p+1].usd, 0, arroftoks[p+1].linenum);
                     if (holdit == null){
                       p++;
                     }
@@ -590,13 +624,13 @@
                     }
                   }
                   else{
-                      arroffuncts[reservedarr.indexOf(arroftoks[p].usd)](arroftoks[p+1].usd, 0);
+                      arroffuncts[reservedarr.indexOf(arroftoks[p].usd)](arroftoks[p+1].usd, 0, arroftoks[p+1].linenum);
                       p++;
                   }
                 }
                 else if (i == 2){
                   //alert("here 2");
-                  arroffuncts[reservedarr.indexOf(arroftoks[p].usd)](arroftoks[p+1].usd, arroftoks[p+2].usd);
+                  arroffuncts[reservedarr.indexOf(arroftoks[p].usd)](arroftoks[p+1].usd, arroftoks[p+2].usd,arroftoks[p+1].linenum, arroftoks[p+2].linenum);
                   p++;
                 }
               }
