@@ -94,7 +94,7 @@
                     document.getElementById("result").value += "Line " + c + ", ERROR: Undeclared variable " + a + "\n"; throw new Error('Not Found');
                 } else {
                     arrofvars.set(a, ACC);
-                    document.getElementById("accumulator").value += "\nLine " + c + ", STORING " + arrofvars.get(a) + " to Accumulator \n"; linesFunction++;
+                    document.getElementById("accumulator").value += "\nLine " + c + ", STORING " + arrofvars.get(a) + " to Accumulator \n";
                 } 
             }, //STORE
               
@@ -103,6 +103,8 @@
                 if (arrofvars.get(a) == undefined) { 
                     document.getElementById("result").value += "Line " + c + ", ERROR: Undeclared variable " + a + "\n"; throw new Error('Not Found'); 
                 } else {
+                    
+                    document.getElementById("accumulator").value += "\nLine " + c + ", COPYING " + arrofvars.get(b) + " to " + a + "\n";
                     arrofvars.set(a, arrofvars.get(b)); 
                 } 
             }, //COPY
@@ -113,7 +115,7 @@
                     throw new Error('Not Found');
                 } else {
                     let numprompt = prompt("Give a value"); arrofvars.set(a, numprompt);
-                    document.getElementById('accumulator').value += "\nLine " + c + ", User Input " + numprompt + "\n"; linesFunction++;
+                    document.getElementById('accumulator').value += "\nLine " + c + ", User Input " + numprompt + " to " + a + "\n";
                 } 
             }, //READ
               
@@ -248,7 +250,8 @@
                     throw new Error('Stack Error');
                 } 
                 
-                 document.getElementById("accumulator").value += "\nLine " + c + ", WRITING to Stack\n";
+                 document.getElementById("accumulator").value += "\nLine " + c + ", WRITING to Stack" + stack[(stack.length-1)-a] + "to Accumulator\n";
+                  document.getElementById('accumulator').value += "\nLine " + c + ", ACC: "+ ACC + "\n"; 
                 stack[(stack.length-1)-a] = ACC; 
             }, //STACKW
               
